@@ -1,0 +1,43 @@
+[
+    {
+        "update": "user",
+        "updates": [
+            {
+                "q": {},
+                "u": [
+                    {
+                        "$set": {
+                            "premium": false,
+                            "premium_expired_at": ""
+                        }
+                    }
+                ],
+                "multi": true
+            }
+        ]
+    },
+    {
+        "collMod": "user",
+        "validator": {
+            "$jsonSchema": {
+                "bsonType": "object",
+                "required": [
+                    "premium"
+                ],
+                "properties": {
+                    "premium": {
+                        "bsonType": "bool",
+                        "description": "must be a boolean and is required"
+                    },
+                    "premium_expired_at": {
+                        "bsonType": [
+                            "string",
+                            "null"
+                        ],
+                        "description": "must be a string or null if the field exists"
+                    }
+                }
+            }
+        }
+    }
+]

@@ -1,0 +1,127 @@
+# GraphQL schema example
+#
+# https://gqlgen.com/getting-started/
+
+type User {
+  id: String!
+  username: String!
+  email: String!
+  password: String!
+  nickname: String!
+  avatar: String!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+type Token {
+  userID: String!
+  accessToken: String!
+  refreshToken: String!
+  accessTokenExpiry: DateTime!
+  refreshTokenExpiry: DateTime!
+  device: String!
+}
+
+type AccessToken {
+  accessToken: String!
+  accessTokenExpiry: DateTime!
+}
+
+type LoginResponse {
+  user: User!
+  token: Token!
+}
+
+# register
+
+input EmailRegisterLinkRequest {
+  username: String!
+  email: String!
+}
+
+input EmailRegisterCodeRequest {
+  username: String!
+  email: String!
+  password: String!
+}
+
+input EmailRegisterLinkVerifyRequest {
+  flowId: String!
+  password: String!
+  nickname: String
+}
+
+input EmailRegisterCodeVerifyRequest {
+  email: String!
+  nickname: String
+}
+
+# login
+input EmailLoginWithPasswordRequest {
+  email: String!
+  password: String!
+  device: String
+}
+
+input UsernameLoginWithPasswordRequest {
+  username: String!
+  password: String!
+  device: String
+}
+
+# reset password
+input EmailPasswordResetLinkRequest {
+  email: String!
+}
+
+input EmailPasswordResetCodeRequest {
+  email: String!
+  password: String!
+}
+
+input EmailPasswordResetLinkVerifyRequest {
+  flowId: String!
+  password: String!
+}
+
+input EmailPasswordResetCodeVerifyRequest {
+  email: String!
+  code: String!
+}
+
+
+
+# token
+input RefreshToken {
+  refreshToken: String!
+  accessToken: String!
+  device: String!
+}
+
+extend type Query {
+  refreshToken: AccessToken!
+  checkUserEmailRegisterLinkExpired(flowId: String!): Boolean!
+  checkUserEmailResetPasswordLinkExpired(flowId: String!): Boolean!
+}
+
+# NEED TO ADD THE "extend" KEYWORD
+extend type Mutation {
+
+  # register
+  userEmailRegisterWithLink(request: EmailRegisterLinkRequest!): Boolean!
+  userEmailRegisterWithLinkVerify(request: EmailRegisterLinkVerifyRequest!): Boolean!
+
+  userEmailRegisterWithCode(request: EmailRegisterCodeRequest!): Boolean!
+  userEmailRegisterWithCodeVerify(request: EmailRegisterCodeVerifyRequest!): Boolean!
+
+  # login
+  userEmailLoginWithPassword(request: EmailLoginWithPasswordRequest!): LoginResponse!
+  userUsernameLoginWithPassword(request: UsernameLoginWithPasswordRequest!): LoginResponse!
+
+  # reset password
+  userEmailResetPasswordWithLink(request: EmailPasswordResetLinkRequest!): Boolean!
+  userEmailResetPasswordWithLinkVerify(request: EmailPasswordResetLinkVerifyRequest!): Boolean!
+
+  userEmailResetPasswordWithCode(request: EmailPasswordResetCodeRequest!): Boolean!
+  userEmailResetPasswordWithCodeVerify(request: EmailPasswordResetCodeVerifyRequest!): Boolean!
+}

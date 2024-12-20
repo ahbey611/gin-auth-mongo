@@ -1,0 +1,20 @@
+dump.rdb
+logs/*
+dump.rdb
+.env
+.private/*
+.public/*
+.vscode/*
+.idea/*
+static/*
+graph/generated.go
+
+MIGRATE.md
+MONGODB.md
+
+logs/*
+
+
+# assets/*
+
+DEPLOY.md

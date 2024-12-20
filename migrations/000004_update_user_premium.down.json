@@ -1,0 +1,19 @@
+[
+    {
+        "update": "user",
+        "updates": [
+            {
+                "q": {},
+                "u": [
+                    {
+                        "$unset": {
+                            "premium": "",
+                            "premium_expired_at": ""
+                        }
+                    }
+                ],
+                "multi": true
+            }
+        ]
+    }
+]

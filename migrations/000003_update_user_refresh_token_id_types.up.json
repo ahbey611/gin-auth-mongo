@@ -1,0 +1,52 @@
+[
+    {
+        "update": "user_refresh_token",
+        "updates": [
+            {
+                "q": {},
+                "u": [
+                    {
+                        "$set": {
+                            "user_id": {
+                                "$toObjectId": "$user_id"
+                            }
+                        }
+                    }
+                ],
+                "multi": true
+            }
+        ]
+    },
+    {
+        "collMod": "user_refresh_token",
+        "validator": {
+            "$jsonSchema": {
+                "bsonType": "object",
+                "required": [
+                    "user_id",
+                    "token",
+                    "expired_at"
+                ],
+                "properties": {
+                    "user_id": {
+                        "bsonType": "objectId",
+                        "description": "must be an objectId and is required"
+                    },
+                    "token": {
+                        "bsonType": "string",
+                        "description": "must be a string and is required"
+                    },
+                    "expired_at": {
+                        "bsonType": "string",
+                        "description": "must be a string and is required"
+                    },
+                    "device": {
+                        "bsonType": "string",
+                        "description": "must be a string if the field exists"
+                    }
+                }
+            }
+        },
+        "validationLevel": "strict"
+    }
+]

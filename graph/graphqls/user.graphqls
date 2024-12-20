@@ -1,0 +1,25 @@
+extend type Query {
+  getUser: User!
+}
+
+input UpdateNicknameRequest {
+  nickname: String!
+}
+
+input UploadAvatarRequest {
+  avatar: Upload!
+}
+
+# logout
+input LogoutRequest {
+  device: String!
+}
+
+extend type Mutation {
+  userUpdateNickname(input: UpdateNicknameRequest!): Boolean!
+  userUpdateAvatar(input: UploadAvatarRequest!): String!
+  userDeleteAccount: Boolean!
+  userLogoutCurrentDevice(input: LogoutRequest!): Boolean!
+  userLogoutAllDevice: Boolean!
+}
+

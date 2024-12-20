@@ -1,0 +1,9 @@
+[
+    {
+        "dropIndexes": "user",
+        "index": "*"
+    },
+    {
+        "drop": "user"
+    }
+]

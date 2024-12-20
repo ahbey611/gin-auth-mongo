@@ -1,0 +1,14 @@
+scalar DateTime
+scalar Upload
+
+# type Query {
+#     hello: String!
+# }
+
+type Mutation {
+    helloWorld: HelloWorld!
+}
+
+type HelloWorld {
+    message: String!
+}

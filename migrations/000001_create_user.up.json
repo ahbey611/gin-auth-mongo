@@ -1,0 +1,75 @@
+[
+    {
+        "create": "user"
+    },
+    {
+        "createIndexes": "user",
+        "indexes": [
+            {
+                "key": {
+                    "email": 1
+                },
+                "name": "email_unique",
+                "unique": true
+            },
+            {
+                "key": {
+                    "username": 1
+                },
+                "name": "username_unique",
+                "unique": true
+            }
+        ]
+    },
+    {
+        "collMod": "user",
+        "validator": {
+            "$jsonSchema": {
+                "bsonType": "object",
+                "required": [
+                    "username",
+                    "email",
+                    "password"
+                ],
+                "properties": {
+                    "username": {
+                        "bsonType": "string",
+                        "minLength": 2,
+                        "maxLength": 32,
+                        "pattern": "^[a-zA-Z0-9_-]+$",
+                        "description": "must be a string and is required"
+                    },
+                    "email": {
+                        "bsonType": "string",
+                        "pattern": "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$",
+                        "description": "must be a valid email address and is required"
+                    },
+                    "password": {
+                        "bsonType": "string",
+                        "description": "must be a string and is required"
+                    },
+                    "nickname": {
+                        "bsonType": "string",
+                        "minLength": 2,
+                        "maxLength": 32,
+                        "pattern": "^[a-zA-Z0-9_-]+$",
+                        "description": "must be a string if the field exists"
+                    },
+                    "avatar": {
+                        "bsonType": "string",
+                        "description": "must be a string if the field exists"
+                    },
+                    "created_at": {
+                        "bsonType": "string",
+                        "description": "must be a string if the field exists"
+                    },
+                    "updated_at": {
+                        "bsonType": "string",
+                        "description": "must be a string if the field exists"
+                    }
+                }
+            }
+        },
+        "validationLevel": "strict"
+    }
+]
