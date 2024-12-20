@@ -62,7 +62,7 @@ func generateClaims(user *models.User, privateJWK jose.JSONWebKey, key jose.Sign
 	issuedAt := time.Now()
 	publicClaims := jwt.Claims{
 		Issuer:  consts.JWT_ISSUER,
-		Subject: user.ID,
+		Subject: user.ID.Hex(),
 		// Audience:
 		IssuedAt: jwt.NewNumericDate(issuedAt),
 		Expiry:   jwt.NewNumericDate(issuedAt.Add(time.Duration(consts.JWT_ACCESS_TOKEN_EXPIRY) * time.Minute)),
@@ -92,14 +92,14 @@ func GenerateToken(user *models.User, device string, builder jwt.Builder, issued
 		return nil, err
 	}
 
-	err = repositories.CreateRefreshToken(user.ID, refreshToken, issuedAt.AddDate(0, 0, consts.JWT_REFRESH_TOKEN_EXPIRY), device)
+	err = repositories.CreateRefreshToken(user.ID.Hex(), refreshToken, issuedAt.AddDate(0, 0, consts.JWT_REFRESH_TOKEN_EXPIRY), device)
 
 	if err != nil {
 		return nil, err
 	}
 
 	token := &model.Token{
-		UserID:             user.ID,
+		UserID:             user.ID.Hex(),
 		AccessToken:        accessToken,
 		AccessTokenExpiry:  issuedAt.Add(time.Duration(consts.JWT_ACCESS_TOKEN_EXPIRY) * time.Minute).Format(consts.DATETIME_NANO_FORMAT),
 		RefreshToken:       refreshToken,

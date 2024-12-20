@@ -144,7 +144,7 @@ func UserEmailResetPasswordLinkVerify(request *requests.EmailPasswordResetLinkVe
 	}
 
 	// update the password
-	err = repositories.UpdateUserPasswordByID(user.ID, hashedPassword)
+	err = repositories.UpdateUserPasswordByID(user.ID.Hex(), hashedPassword)
 	if err != nil {
 		return errors.New("update password failed")
 	}
@@ -181,7 +181,7 @@ func UserEmailResetPasswordCodeVerify(request *requests.EmailPasswordResetCodeVe
 	}
 
 	// update the password
-	err = repositories.UpdateUserPasswordByID(user.ID, hashedPassword)
+	err = repositories.UpdateUserPasswordByID(user.ID.Hex(), hashedPassword)
 	if err != nil {
 		return errors.New("update password failed")
 	}
