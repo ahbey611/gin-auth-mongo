@@ -8,7 +8,6 @@ import (
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
-	// "gorm.io/gorm"
 )
 
 // Paginated Result
@@ -137,6 +136,9 @@ func FindManyWithoutPagination[T any](
 
 	cursor, err := collection.Find(context.TODO(), filter, findOptions)
 	if err != nil {
+		if err == mongo.ErrNoDocuments {
+			return nil, nil
+		}
 		return nil, err
 	}
 	defer cursor.Close(context.TODO())

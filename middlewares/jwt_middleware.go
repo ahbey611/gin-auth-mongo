@@ -27,7 +27,7 @@ func JWTAuthMiddleware() gin.HandlerFunc {
 		requestPath := c.Request.URL.Path
 
 		// the auth routes are not need to verify token
-		if strings.HasPrefix(requestPath, "/api/auth") {
+		if strings.HasPrefix(requestPath, "/api/v1/auth") {
 			c.Next()
 		}
 
